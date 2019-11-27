@@ -8,7 +8,7 @@ class Platform
     private:
         RectangleShape platformRect;
     public:
-        Platform(float x,float y);
+        Platform(float x,float y,float X,float Y);
         RectangleShape getShape();
 
 };

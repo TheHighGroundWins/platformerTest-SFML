@@ -1,9 +1,9 @@
-Player::Player(float x,float y, Vector2f resolutionIn)
+Player::Player(float x,float y,float X,float Y, Vector2f resolutionIn)
 {
     resolution = resolutionIn;
     playerRect.setFillColor(Color(0,0,255));
     playerRect.setPosition(Vector2f(x,y));
-    playerRect.setSize(Vector2f(50,50));
+    playerRect.setSize(Vector2f(X,Y));
     lastX=x;
     lastY=y;
 }
@@ -26,7 +26,8 @@ void Player::jump()
 {
     if(Keyboard::isKeyPressed(Keyboard::W))
     {
-        playerRect.move(0,-2);
+        playerRect.move(0,-5);
+        isJumping=true;
     }
 }
 void Player::movePlayer()
@@ -42,7 +43,7 @@ RectangleShape Player::getShape()
 void Player::updatePlayer(Platform plat)
 {
     movePlayer();
-    if(playerRect.getPosition().y>resolution.y-50)
+    if(playerRect.getPosition().y<resolution.y-200&&isJumping==false)
     {
         playerRect.move(0,gravity);
     }
@@ -65,6 +66,7 @@ void Player::updatePlayer(Platform plat)
     else if(playerRect.getGlobalBounds().intersects(plat.getShape().getGlobalBounds()))
     {
         playerRect.setPosition(lastX,lastY);
+        isJumping=true;
     }
     lastX=playerRect.getPosition().x;
     lastY=playerRect.getPosition().y;

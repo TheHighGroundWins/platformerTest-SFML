@@ -10,8 +10,8 @@ int main()
 	resolution.x = VideoMode::getDesktopMode().width;
 	resolution.y = VideoMode::getDesktopMode().height;
     sf::RenderWindow window(sf::VideoMode(resolution.x, resolution.y), "platformer");
-    Player player(0,800,resolution);
-    Platform plat(100,50);
+    Player player(0,800,80,80,resolution);
+    Platform plat(300,900,200,50);
     while (window.isOpen())
     {
         sf::Event event;
@@ -22,6 +22,10 @@ int main()
             if(Keyboard::isKeyPressed(Keyboard::Escape))
             {
                 window.close();
+            }
+            if(event.type==Event::KeyReleased)
+            {
+                player.isJumping=false;
             }
         }
 

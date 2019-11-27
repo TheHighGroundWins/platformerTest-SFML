@@ -10,12 +10,13 @@ class Player
 
     float lastX;
     float lastY;
-    int gravity=2;
+    int gravity=8;
 
     Vector2f resolution;
 
     public:
-        Player(float x,float y,Vector2f resolutionIn);
+        bool isJumping=false;
+        Player(float x,float y,float X,float Y,Vector2f resolutionIn);
         void moveLeft();
         void moveRight();
         void jump();
