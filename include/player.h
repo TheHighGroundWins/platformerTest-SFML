@@ -10,12 +10,14 @@ class Player
 
     float lastX;
     float lastY;
-    int gravity=8;
+    int gravity=5;
 
     Vector2f resolution;
+    Time totalPress;
 
     public:
         bool isJumping=false;
+
         Player(float x,float y,float X,float Y,Vector2f resolutionIn);
         void moveLeft();
         void moveRight();
@@ -23,6 +25,9 @@ class Player
         void movePlayer();
         RectangleShape getShape();
         void updatePlayer(Platform plat);
+        bool hold = false;
+        bool left = false;
+        bool right = false;
 
 
 };

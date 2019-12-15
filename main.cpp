@@ -5,13 +5,12 @@
 
 int main()
 {
-
     Vector2f resolution;
 	resolution.x = VideoMode::getDesktopMode().width;
 	resolution.y = VideoMode::getDesktopMode().height;
     sf::RenderWindow window(sf::VideoMode(resolution.x, resolution.y), "platformer");
-    Player player(0,800,80,80,resolution);
-    Platform plat(300,900,200,50);
+    Player player(0,500,80,80,resolution);
+    Platform plat(300,500,200,50);
     while (window.isOpen())
     {
         sf::Event event;

@@ -12,22 +12,48 @@ void Player::moveLeft()
 {
     if(Keyboard::isKeyPressed(Keyboard::A))
     {
-        playerRect.move(-2,0);
+        playerRect.move(-1.5,0);
+        left=true;
+    }
+    else{
+        left=false;
     }
 }
 void Player::moveRight()
 {
     if(Keyboard::isKeyPressed(Keyboard::D))
     {
-        playerRect.move(2,0);
+        playerRect.move(1.5,0);
+        right=true;
+    }
+    else{
+        right=false;
     }
 }
 void Player::jump()
 {
+    Time counterTime;
+
+
     if(Keyboard::isKeyPressed(Keyboard::W))
     {
-        playerRect.move(0,-5);
+        //gets the amount of time passed and adds to the total time
+        Clock longPress;
+        if(right||left)
+        {
+            playerRect.move(0,-1);
+        }
+        else{
+            playerRect.move(0,-2);
+        }
+
         isJumping=true;
+        counterTime=longPress.getElapsedTime();
+        totalPress+=counterTime;
+    }
+    if(totalPress.asMicroseconds()>200)
+    {
+        isJumping=false;
     }
 }
 void Player::movePlayer()
@@ -43,11 +69,11 @@ RectangleShape Player::getShape()
 void Player::updatePlayer(Platform plat)
 {
     movePlayer();
-    if(playerRect.getPosition().y<resolution.y-200&&isJumping==false)
+    if(playerRect.getPosition().y<resolution.y-150&&!isJumping)
     {
         playerRect.move(0,gravity);
     }
-    if(playerRect.getPosition().x>resolution.x-50)
+    if(playerRect.getPosition().x>resolution.x-100)
     {
         playerRect.setPosition(lastX,lastY);
     }
@@ -55,19 +81,29 @@ void Player::updatePlayer(Platform plat)
     {
         playerRect.setPosition(lastX,lastY);
     }
-    else if(playerRect.getPosition().y>resolution.y-50)
+    //checks if the player is on the floor or not
+    else if(playerRect.getPosition().y>resolution.y-150)
     {
+        isJumping=true;
         playerRect.setPosition(lastX,lastY);
+        Time zeroTime;
+        totalPress=zeroTime;
     }
+    //prevents going through the floor
     else if(playerRect.getPosition().y<0)
     {
         playerRect.setPosition(lastX,lastY);
+
     }
     else if(playerRect.getGlobalBounds().intersects(plat.getShape().getGlobalBounds()))
     {
-        playerRect.setPosition(lastX,lastY);
         isJumping=true;
+        playerRect.setPosition(lastX,lastY);
+        Time zeroTime;
+        totalPress=zeroTime;
+
     }
     lastX=playerRect.getPosition().x;
     lastY=playerRect.getPosition().y;
+
 }
